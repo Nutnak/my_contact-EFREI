@@ -3,12 +3,12 @@ import mongoose from 'mongoose'
 import express from 'express'
 import route from './route/router.js';
 
-// mongoose.connect(process.env.DB_URL);
-// const connection = mongoose.connection;
+mongoose.connect(process.env.DB_URL);
+const connection = mongoose.connection;
 
-// connection.once('open', () => {
-//     console.log('Connecté à la bdd.')
-// })
+connection.once('open', () => {
+    console.log('Connecté à la bdd.')
+})
 
 const app = express()
 app.use(express.json())
