@@ -8,11 +8,9 @@ export const authMiddleware = (req, res, next) => {
     
     const tokenWithoutBearer = token.split(' ')[1];
     
-    jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET_KEY, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({message: "Tokten invalid ou expiré."})
-        }
-        req.user = decoded
-        next();
-    });
+    const decoded = jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET_KEY)
+
+    // console.log(decoded.userid)
+    req.userId = decoded.userid
+    next()
 };
