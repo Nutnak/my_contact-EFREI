@@ -13,7 +13,7 @@ const userSchema = new Schema({
     password: String,
     contacts: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "User"
+        ref: "Contact"
     }
 }, { timestamps: true });
 

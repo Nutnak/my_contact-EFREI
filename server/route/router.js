@@ -2,7 +2,8 @@ import express from 'express'
 import { createUser } from '../controller/auth/register.js'
 import { loginUser } from '../controller/auth/login.js';
 import { authMiddleware } from '../middleware/authMiddleware.js'
-import { test } from '../middleware/testMiddleware.js'
+import { addContact } from '../controller/contact/addContact.js'
+// import { test } from '../middleware/testMiddleware.js'
 const route = express.Router();
 
 
@@ -10,6 +11,6 @@ const route = express.Router();
 route.post('/auth/register', createUser)
 route.post('/auth/login', loginUser)
 // User routes
-route.get('/test', test);
+route.post('/contact/add/', authMiddleware, addContact);
 
 export default route;
