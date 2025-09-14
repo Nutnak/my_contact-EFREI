@@ -3,6 +3,7 @@ import { createUser } from '../controller/auth/register.js'
 import { loginUser } from '../controller/auth/login.js';
 import { authMiddleware } from '../middleware/authMiddleware.js'
 import { addContact } from '../controller/contact/addContact.js'
+import { updateContact } from '../controller/contact/updateContact.js';
 // import { test } from '../middleware/testMiddleware.js'
 const route = express.Router();
 
@@ -12,5 +13,6 @@ route.post('/auth/register', createUser)
 route.post('/auth/login', loginUser)
 // User routes
 route.post('/contact/add/', authMiddleware, addContact);
+route.post('/contact/update/:id', authMiddleware, updateContact)
 
 export default route;
