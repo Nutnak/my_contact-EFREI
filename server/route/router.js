@@ -5,6 +5,7 @@ import { authMiddleware } from '../middleware/authMiddleware.js'
 import { addContact } from '../controller/contact/addContact.js'
 import { updateContact } from '../controller/contact/updateContact.js';
 import { deleteContact } from '../controller/contact/deleteContact.js';
+import { readOneContact } from '../controller/contact/readOneContact.js';
 // import { test } from '../middleware/testMiddleware.js'
 const route = express.Router();
 
@@ -15,6 +16,7 @@ route.post('/auth/login', loginUser)
 // Contact routes
 route.post('/contact/add/', authMiddleware, addContact);
 route.post('/contact/update/:id', authMiddleware, updateContact)
-route.post('/contact/delete/:id', authMiddleware, deleteContact)
+route.delete('/contact/delete/:id', authMiddleware, deleteContact)
+route.get('/contact/read/:id', authMiddleware, readOneContact)
 
 export default route;
