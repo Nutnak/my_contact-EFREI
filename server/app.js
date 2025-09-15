@@ -1,7 +1,10 @@
 import 'dotenv/config'
 import mongoose from 'mongoose'
 import express from 'express'
-import route from './route/router.js';
+import route from './routes/router.js';
+import swaggerUi from 'swagger-ui-express'
+import swaggerJSDoc from 'swagger-jsdoc';
+
 
 mongoose.connect(process.env.DB_URL);
 const connection = mongoose.connection;
@@ -23,3 +26,32 @@ app.listen(port, () => {
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Mon API',
+      version: '1.0.0',
+    },
+    servers: [
+    {
+      url: "http://localhost:3000/api"
+    }
+    ],
+    components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: "http",
+                scheme: "bearer",
+                bearerFormat: "JWT"
+            }
+        }  
+    }
+  },
+  apis: ['./routes/*.js', './controller/*/*.js'], // fichiers avec annotations swagger
+};
+
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))

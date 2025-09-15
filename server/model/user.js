@@ -3,12 +3,6 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    firstname: String,
-    lastname: String,
-    phonenumber: String,
-    adress: String,
-    city: String,
-    zipcode: String,
     email: String,
     password: String,
 }, { timestamps: true });
