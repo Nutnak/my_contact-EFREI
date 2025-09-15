@@ -2,7 +2,7 @@ import Contact from '../../model/contact.js'
 
 /**
  * @swagger
- * /contact/read/:
+ * /contacts/read/:
  *   get:
  *     security: 
  *       - bearerAuth: []

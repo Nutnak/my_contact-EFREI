@@ -2,7 +2,7 @@ import Contact from '../../model/contact.js'
 
 /**
  * @swagger
- * /contact/delete/{contactId}:
+ * /contacts/delete/{contactId}:
  *   delete:
  *     security: 
  *       - bearerAuth: []
