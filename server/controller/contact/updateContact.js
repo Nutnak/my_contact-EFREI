@@ -2,7 +2,7 @@ import Contact from '../../model/contact.js'
 
 /**
  * @swagger
- * /contact/update/{contactId}:
+ * /contacts/update/{contactId}:
  *   patch:
  *     security: 
  *       - bearerAuth: []

@@ -16,10 +16,10 @@ const route = express.Router();
 route.post('/auth/register', createUser)
 route.post('/auth/login', loginUser)
 // Contact routes
-route.post('/contact/add/', authMiddleware, addContact);
-route.patch('/contact/update/:id', authMiddleware, updateContact)
-route.delete('/contact/delete/:id', authMiddleware, deleteContact)
-route.get('/contact/read/:id', authMiddleware, readOneContact)
-route.get('/contact/read', authMiddleware, readAllContact)
+route.post('/contacts/add/', authMiddleware, addContact);
+route.patch('/contacts/update/:id', authMiddleware, updateContact)
+route.delete('/contacts/delete/:id', authMiddleware, deleteContact)
+route.get('/contacts/read/:id', authMiddleware, readOneContact)
+route.get('/contacts/read', authMiddleware, readAllContact)
 
 export default route;
