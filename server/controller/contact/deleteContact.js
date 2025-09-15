@@ -29,6 +29,6 @@ export const deleteContact = async (req, res) => {
         await Contact.deleteOne({_id: contactId, user: userId})
         return res.status(200).json({message: "Contact supprimé."})
     } catch (err) {
-        return res.status(400).json({err: err.message})
+        return res.status(400).json({message: "Le contact n'existe pas."})
     }
 };

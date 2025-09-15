@@ -56,6 +56,6 @@ export const readAllContact = async (req, res) => {
         } 
         return res.status(200).json({contactsList});
     } catch(err) {
-        return res.status(400).json({err: err.message})
+        return res.status(400).json({message: "Une erreur est survenue pour afficher la liste de contact."})
     }
 }
