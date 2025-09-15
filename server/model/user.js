@@ -11,10 +11,6 @@ const userSchema = new Schema({
     zipcode: String,
     email: String,
     password: String,
-    contacts: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "Contact"
-    }
 }, { timestamps: true });
 
 export default mongoose.model('Users', userSchema);
