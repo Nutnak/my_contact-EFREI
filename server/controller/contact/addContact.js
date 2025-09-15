@@ -1,5 +1,59 @@
-import  User  from '../../model/user.js'
 import Contact from '../../model/contact.js'
+
+/**
+ * @swagger
+ * /contact/add:
+ *   post:
+ *     security: 
+ *       - bearerAuth: []
+ *     tags: 
+ *       - Contacts
+ *     summary: Création d'un nouveau contact.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - firstname
+ *               - lastname
+ *               - phonenumber
+ *               - address
+ *               - city
+ *               - zipcode
+ *             properties:
+ *               firstname:
+ *                 type: string
+ *                 example: Jean
+ *               lastname:
+ *                 type: string
+ *                 example: Matou
+ *               phonenumber:
+ *                 type: string
+ *                 example: 0634231234
+ *               address:
+ *                 type: string
+ *                 example: 17 rue de la rue.
+ *               city:
+ *                 type: string
+ *                 example: Grigny
+ *               zipcode:
+ *                 type: number
+ *                 example: 67890
+ *     responses:
+ *       200:
+ *         description: Utilisateur créé.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *       400:
+ *         description: Erreur lors de la création du contact, veuillez remplir tous les champs.
+ */
 
 export const addContact = async (req, res) => {
     const {firstname, lastname, phonenumber, address, city, zipcode} = req.body;
