@@ -49,14 +49,14 @@ import User from '../../model/user.js'
 const saltRounds = 10
 
 export const createUser = async (req, res) => {
-    const {firstname, lastname, phonenumber, adress, city, zipcode, email, password} = req.body;
+    const {email, password} = req.body;
     const userExist = await User.exists({email: email})
     if(userExist) {
-        res.status(400).json({message: "Cette email est déjà associée à un utilisateur."})
+        return res.status(400).json({message: "Cette email est déjà associée à un utilisateur."})
     } else {
         try { 
             const hashedPassword =  await bcrypt.hash(password, saltRounds);
-            const newUser =  new User({firstname: firstname, lastname: lastname, phonenumber: phonenumber, adress: adress, city: city, zipcode: zipcode, email: email, password: hashedPassword})
+            const newUser =  new User({email: email, password: hashedPassword})
             await newUser.save()
             res.status(200).json({message: "le user est bien créé", newUser})
         } catch (error) {

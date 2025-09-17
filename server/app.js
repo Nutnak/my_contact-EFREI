@@ -4,6 +4,7 @@ import express from 'express'
 import route from './routes/router.js';
 import swaggerUi from 'swagger-ui-express'
 import swaggerJSDoc from 'swagger-jsdoc';
+import cors from 'cors'
 
 
 mongoose.connect(process.env.DB_URL);
@@ -14,10 +15,18 @@ connection.once('open', () => {
 })
 
 const app = express()
+const corsOption = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+}
+
+app.use(cors(corsOption))
 app.use(express.json())
 const port = process.env.PORT
 
 app.use('/api', route);
+
 
 app.listen(port, () => {
     console.log(`Serveur backend lancé sur le port: ${port}`)
