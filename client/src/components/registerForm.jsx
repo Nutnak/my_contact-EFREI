@@ -1,8 +1,11 @@
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import '../css/registerForm.css'
+import { useState } from "react";
 
 export const RegisterForm = () => {
+    const [errorServer, setErrorServer] = useState('')
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
@@ -12,12 +15,14 @@ export const RegisterForm = () => {
             password: data.password
         })
             .then((response) => {
-                if(response.status === 200){
+                if (response.status === 200) {
                     navigate('/login')
                 };
             })
             .catch((error) => {
-                console.log(error);
+                if(error.response.status === 400) {
+                    setErrorServer('Cet email est déjà utilisé')
+                };
             });
     };
 
@@ -29,12 +34,13 @@ export const RegisterForm = () => {
                     required: true,
                     pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: "Veuillez entrer une adresse email valide"
+                        message: "Veuillez entrer une adresse email valide."
                     }
                 })}></input>
-                {errors.email && <span>{errors.email.message}</span>}
+                {errors.email && <span className="error_form">{errors.email.message}</span>}
                 <input name="password" type="password" {...register("password")}></input>
                 <button type="submit">Envoyer</button>
+                {errorServer && <span className="error_form">{errorServer}</span>}
             </form>
             <p>Déjà inscrit ? Connectez-vous <Link to="/login">ici</Link></p>
         </div>
