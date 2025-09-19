@@ -7,10 +7,11 @@ export const LoginForm = () => {
     const [password, setPassword] = useState("");
 
     const onSubmit = (e) => {
+        e.preventDefault();
         axios.post('http://localhost:4000/api/auth/login', {
             email: email,
             password: password
-        })
+        }, { withCredentials: true })
             .then((response) => {
                 console.log(response);
             })
@@ -27,7 +28,7 @@ export const LoginForm = () => {
                 <input type="password" name="password" value={password} onChange={(e) => { setPassword(e.target.value) }}></input>
                 <button type="submit">Envoyer</button>
             </form>
-                <p>Pas encore inscrit ? Inscrivez-vous <Link to="/register">ici</Link></p>
+            <p>Pas encore inscrit ? Inscrivez-vous <Link to="/register">ici</Link></p>
         </div>
     );
 
