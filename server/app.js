@@ -5,6 +5,8 @@ import route from './routes/router.js';
 import swaggerUi from 'swagger-ui-express'
 import swaggerJSDoc from 'swagger-jsdoc';
 import cors from 'cors'
+import cookieParser from 'cookie-parser';
+
 
 
 mongoose.connect(process.env.DB_URL);
@@ -23,6 +25,7 @@ const corsOption = {
 
 app.use(cors(corsOption))
 app.use(express.json())
+app.use(cookieParser())
 const port = process.env.PORT
 
 app.use('/api', route);
