@@ -1,8 +1,10 @@
 import { useState } from "react";
 import axios from "axios"
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -13,7 +15,9 @@ export const LoginForm = () => {
             password: password
         }, { withCredentials: true })
             .then((response) => {
-                console.log(response);
+                if(response.status === 200) {
+                    navigate('/dashboard');
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -22,7 +26,7 @@ export const LoginForm = () => {
 
     return (
         <div className="form-main-container">
-            <h1 className='App-title'>Créer un compte</h1>
+            <h1 className='App-title'>Se connecter</h1>
             <form className="form-container" onSubmit={onSubmit}>
                 <input type="email" name="email" value={email} onChange={(e) => { setEmail(e.target.value) }}></input>
                 <input type="password" name="password" value={password} onChange={(e) => { setPassword(e.target.value) }}></input>

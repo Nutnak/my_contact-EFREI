@@ -21,5 +21,7 @@ route.patch('/contacts/update/:id', authMiddleware, updateContact)
 route.delete('/contacts/delete/:id', authMiddleware, deleteContact)
 route.get('/contacts/read/:id', authMiddleware, readOneContact)
 route.get('/contacts/read', authMiddleware, readAllContact)
+//Dashboard
+route.get('/dashboard', authMiddleware)
 
 export default route;
