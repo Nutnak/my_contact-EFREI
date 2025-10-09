@@ -21,7 +21,7 @@ export const RegisterForm = () => {
             })
             .catch((error) => {
                 if(error.response.status === 400) {
-                    setErrorServer('Cet email est déjà utilisé')
+                    setErrorServer('Cet email est déjà utilisé.')
                 };
             });
     };
