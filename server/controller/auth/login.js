@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import User from '../../model/user.js';
-import { generateAccesToken } from '../../helper/index.js';
+import { generateAccesToken, generateRefreshToken } from '../../helper/index.js';
 
 /**
  * @swagger
@@ -44,22 +44,22 @@ import { generateAccesToken } from '../../helper/index.js';
 export const loginUser = async (req, res) => {
     const ACCES_TOKEN = "accesToken";
     const REFRESH_TOKEN = "refreshToken";
-    const {email, password} = req.body;
-    const user = await User.findOne({email: email});
-    if(!user) {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email: email });
+    if (!user) {
         return res.status(400).json('Email ou mot de passe incorrect.')
     }
-    try{ 
+    try {
         const userInputPassword = password;
         const matchPassword = await bcrypt.compare(userInputPassword, user.password)
-        if(matchPassword){
+        if (matchPassword) {
             const accesToken = generateAccesToken(user);
-            res.cookie(ACCES_TOKEN, accesToken, { httpOnly: false, secure: false, maxAge: 1000 * 60 * 60})
-            // const refreshToken = jwt.sign({userid: user.id,}, process.env.JWT_SECRET_KEY, {expireIn: '1d'})
-            // res.cookie(REFRESH_TOKEN, refreshToken, {httpOnly: false, secure: false});
-            return res.status(200).json({message: "Bien enregistré."})
+            res.cookie(ACCES_TOKEN, accesToken, { httpOnly: false, secure: false })
+            const refreshToken = generateRefreshToken(user)
+            res.cookie(REFRESH_TOKEN, refreshToken, {httpOnly: true, secure: false, maxAge: 24 * 60 * 60 * 1000});
+            return res.status(200).json({ message: "Bien enregistré." })
         }
-    } catch(err) {
-       return res.status(500).json({err: err.message})
-    } 
+    } catch (err) {
+        return res.status(500).json({ err: err.message })
+    }
 }
