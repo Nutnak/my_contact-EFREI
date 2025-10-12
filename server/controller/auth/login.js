@@ -55,8 +55,14 @@ export const loginUser = async (req, res) => {
         if (matchPassword) {
             const accesToken = generateAccesToken(user);
             res.cookie(ACCES_TOKEN, accesToken, { httpOnly: false, secure: false })
-            const refreshToken = generateRefreshToken(user)
+            const refreshToken = generateRefreshToken(user);
             res.cookie(REFRESH_TOKEN, refreshToken, {httpOnly: true, secure: false, maxAge: 24 * 60 * 60 * 1000});
+            
+            // Store le refresh token en base de données.
+            const tokenToInsert = {
+                refreshToken: refreshToken
+            }
+            await User.findOneAndUpdate({ _id: user._id }, tokenToInsert);
             return res.status(200).json({ message: "Bien enregistré." })
         }
     } catch (err) {
