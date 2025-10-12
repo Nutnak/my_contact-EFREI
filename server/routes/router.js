@@ -7,6 +7,8 @@ import { updateContact } from '../controller/contact/updateContact.js';
 import { deleteContact } from '../controller/contact/deleteContact.js';
 import { readOneContact } from '../controller/contact/readOneContact.js';
 import { readAllContact } from '../controller/contact/readAllContact.js';
+import { refreshToken } from '../controller/auth/refreshToken.js';
+import { logout } from '../controller/auth/logout.js';
 
 // import { test } from '../middleware/testMiddleware.js'
 const route = express.Router();
@@ -15,6 +17,9 @@ const route = express.Router();
 // Auth routes
 route.post('/auth/register', createUser)
 route.post('/auth/login', loginUser)
+route.get('/auth/refresh', refreshToken)
+route.get('/auth/logout', logout)
+
 // Contact routes
 route.post('/contacts/add/', authMiddleware, addContact);
 route.patch('/contacts/update/:id', authMiddleware, updateContact)

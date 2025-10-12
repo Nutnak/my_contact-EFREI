@@ -43,7 +43,7 @@ import { generateAccesToken, generateRefreshToken } from '../../helper/index.js'
 
 export const loginUser = async (req, res) => {
     const ACCES_TOKEN = "accesToken";
-    const REFRESH_TOKEN = "refreshToken";
+    const REFRESH_TOKEN = "jwt";
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -54,7 +54,7 @@ export const loginUser = async (req, res) => {
         const matchPassword = await bcrypt.compare(userInputPassword, user.password)
         if (matchPassword) {
             const accesToken = generateAccesToken(user);
-            res.cookie(ACCES_TOKEN, accesToken, { httpOnly: false, secure: false })
+            // res.cookie(ACCES_TOKEN, accesToken, { httpOnly: false, secure: false })
             const refreshToken = generateRefreshToken(user);
             res.cookie(REFRESH_TOKEN, refreshToken, {httpOnly: true, secure: false, maxAge: 24 * 60 * 60 * 1000});
             
@@ -63,7 +63,7 @@ export const loginUser = async (req, res) => {
                 refreshToken: refreshToken
             }
             await User.findOneAndUpdate({ _id: user._id }, tokenToInsert);
-            return res.status(200).json({ message: "Bien enregistré." })
+            return res.status(200).json({ accesToken: accesToken })
         }
     } catch (err) {
         return res.status(500).json({ err: err.message })
