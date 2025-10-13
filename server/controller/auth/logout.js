@@ -9,11 +9,11 @@ export const logout = async(req, res) => {
 
     const user = await User.findOne({ refreshToken });
     if (!user) {
-        res.clearCookie('jwt', {httpOnly: true, maxAge: 24 * 60 * 60 * 1000})
+        res.clearCookie('jwt', {httpOnly: true, sameSite: "none", secure: true})
         return res.status(204);
     }
     await user.updateOne({refreshToken: null});
-    res.clearCookie('jwt', {httpOnly: true, maxAge: 24 * 60 * 60 * 1000})
+    res.clearCookie('jwt', {httpOnly: true, sameSite: "none", secure: true})
     return res.status(204).end();
   
 }

@@ -56,7 +56,7 @@ export const loginUser = async (req, res) => {
             const accesToken = generateAccesToken(user);
             // res.cookie(ACCES_TOKEN, accesToken, { httpOnly: false, secure: false })
             const refreshToken = generateRefreshToken(user);
-            res.cookie(REFRESH_TOKEN, refreshToken, {httpOnly: true, secure: false, maxAge: 24 * 60 * 60 * 1000});
+            res.cookie(REFRESH_TOKEN, refreshToken, {httpOnly: true, sameSite: "none", secure: true, maxAge: 24 * 60 * 60 * 1000});
             
             // Store le refresh token en base de données.
             const tokenToInsert = {
